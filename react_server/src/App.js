@@ -6,7 +6,7 @@ const ipcRenderer = window.ipcRenderer
 
 ipcRenderer.on('text', (event, text) => {
   console.log(text)
-  textRef.current.innerHTML=text;
+  boxRef.current.querySelector('p').innerHTML=text;
 });
 
 ipcRenderer.on('command', (event, command) => {
@@ -14,24 +14,58 @@ ipcRenderer.on('command', (event, command) => {
   commands[command]();
 });
 
+const mvLen = 10;
+
 const commands = {
-  pi: () => {},
-  up: () => {},
-  phi: () => {},
-  left: () => {},
-  enter: () => {},
-  right: () => {},
-  beta: () => {},
-  down: () => {},
-  lambda: () => {}
+  pi: () => {
+    moveBox(-mvLen, -mvLen);
+  },
+  up: () => {
+    moveBox(0, -mvLen);
+  },
+  phi: () => {
+    moveBox(mvLen, -mvLen);
+  },
+  left: () => {
+    moveBox(-mvLen, 0);
+  },
+  enter: () => {
+    moveBox((Math.random() - .5) * 10 * mvLen, (Math.random() - .5) * 10 * mvLen);
+  },
+  right: () => {
+    moveBox(mvLen, 0);
+  },
+  beta: () => {
+    moveBox(-mvLen, mvLen);
+  },
+  down: () => {
+    moveBox(0, mvLen);
+  },
+  lambda: () => {
+    moveBox(mvLen, mvLen);
+  }
+}
+
+let boxPos = {
+  x: window.innerWidth / 2 - 100,
+  y: window.innerHeight / 2 - 50,
+}
+
+const moveBox = (x, y) => {
+  let maxW = window.innerWidth - 100;
+  let maxH = window.innerHeight - 50;
+  boxPos.x = Math.max(0, Math.min(maxW, boxPos.x + x));
+  boxPos.y = Math.max(0, Math.min(maxH, boxPos.y + y));
+  boxRef.current.style.left = `${boxPos.x}px`
+  boxRef.current.style.top = `${boxPos.y}px`
 }
 
 
-
-let textRef = React.createRef()
+const boxRef = React.createRef()
 
 class App extends Component {
-  state = {}
+  state = {
+  }
 
   sendMessage = (str) => {
     console.log('sending info: ' + str)
@@ -52,8 +86,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div ref={textRef}>
-        
+        <div className='example-box' ref={boxRef}><p></p>
         </div>
       </div>
     );

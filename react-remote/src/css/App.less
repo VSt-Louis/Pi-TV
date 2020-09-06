@@ -1,0 +1,63 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  background-color: #eee;
+}
+
+.fullscreen {
+  font-size: 1.2em;
+  flex-grow: 0;
+  align-self: flex-start;
+  margin: 15px;
+}
+
+.textfield-container {
+  flex-grow: 0;
+  margin-top: 20px;
+  
+  input {
+    font-size: 1.4em;
+  }
+  input[type=text] {
+  }
+  input[type=submit] {
+  }
+}
+
+.buttons-container {
+  display: flex;
+  align-content: flex-end;
+  flex-grow: 1;
+  
+  .buttons {
+    display: grid;
+    justify-content: center;
+    place-items: stretch;
+    grid-template: 
+      [row1-start] "  .    up    .  " 70px [row1-end]
+      [row2-start] "left enter right" 70px [row2-end]
+      [row3-start] "  .   down   .  " 70px [row3-end]
+      / 70px 70px 70px;
+    grid-gap: 10px;
+    font-size: 2.4em;
+    margin-bottom: calc(50vw - 115px);
+    align-self: flex-end;
+
+    div {
+      background-color: #ddf;
+      border: 1px solid #666;
+      text-align: center;
+
+      &.hover {
+
+      }
+    }
+  }
+}
